@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Store</title>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <script>
+        $(document).ready(function(){
+            $("#main").tabs()
+        })
+
+        $(document).ready(function(){
+            $("#displayAll").click(function(){
+                $.get("https://dummyjson.com/products","",function(data,status){
+                    $("#showAllProducts").html(displayAllProducts(data));
+                },"json")
+            })
+        })
+
+        function displayAllProducts(data){
+            var table="<table border=\"1\"><tr><th>Product ID</th><th>Product Name</th><th>Price</th><th>Rating</th><th>Category</th><tr>";
+                for(var index=0;index<=10;index++){
+                    table+="<tr><td>"+data.products[index].id+"</td><td>"+data.products[index].title+"</td><td>"+data.products[index].price+"</td><td>"+data.products[index].rating+"</td><td>"+data.products[index].category+"</td></tr>"
+                }
+                table+="</table>"
+                return table;
+        }
+
+        $(document).ready(function(){
+            $("#displayByIdBtn").click(function(){
+                var productId=$("#productId").val();
+                $.getJSON("https://dummyjson.com/products/"+productId,function(data,status){
+                    $("#showProductByIdDiv").html(displayProductByIdFunction(data))
+                })
+            })
+        })
+        function displayProductByIdFunction(data){
+            var table="<table border=\"1\"><tr><th>Product ID</th><th>Product Name</th><th>Price</th><th>Rating</th><th>Category</th><tr>";
+                    table+="<tr><td>"+data.id+"</td><td>"+data.title+"</td><td>"+data.price+"</td><td>"+data.rating+"</td><td>"+data.category+"</td></tr></table>"
+                
+            
+                return table;
+        }
+
+    </script>
+</head>
+<body>
+    <h1>Welcome to Product Store!</h1>
+    <div id="main">
+        <ul>
+            <li><a href="#showAll">Display All Products</a></li>
+            <li><a href="#showById">Search Product By ID</a></li>
+        </ul>
+        <div id="showAll">
+            <a id="displayAll" href="#">Display All Product</a>
+            <div id="showAllProducts">
+            </div>
+        </div>
+        <div id="showById">
+            Enter Product ID : <input type="text" id="productId"><br><br>
+            <button id="displayByIdBtn">Display Product</button>
+            <div id="showProductByIdDiv">
+
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>
