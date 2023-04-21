@@ -30,6 +30,23 @@
                 table+="</table>"
                 return table;
         }
+
+        $(document).ready(function(){
+            $("#displayByIdBtn").click(function(){
+                var productId=$("#productId").val();
+                $.getJSON("https://dummyjson.com/products/"+productId,function(data,status){
+                    $("#showProductByIdDiv").html(displayProductByIdFunction(data))
+                })
+            })
+        })
+        function displayProductByIdFunction(data){
+            var table="<table border=\"1\"><tr><th>Product ID</th><th>Product Name</th><th>Price</th><th>Rating</th><th>Category</th><tr>";
+                    table+="<tr><td>"+data.id+"</td><td>"+data.title+"</td><td>"+data.price+"</td><td>"+data.rating+"</td><td>"+data.category+"</td></tr></table>"
+                
+            
+                return table;
+        }
+
     </script>
 </head>
 <body>
@@ -46,8 +63,8 @@
         </div>
         <div id="showById">
             Enter Product ID : <input type="text" id="productId"><br><br>
-            <button id="displayById">Display Product</button>
-            <div id="showProductById">
+            <button id="displayByIdBtn">Display Product</button>
+            <div id="showProductByIdDiv">
 
             </div>
         </div>
