@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Siemens UI Batch Jewellery Store </title>
+    <script>
+        function createXHR(){
+            var request=false;
+            try{
+                request=new ActiveXObject("Msxml2.XMLHTTP");
+            }catch(err2){
+                try{
+                request=new ActiveXObject("Microsoft.XMLHTTP");
+                }
+                catch(err3){
+                    try{
+                    request=new XMLHttpRequest();
+                    }catch(err1){
+                        request=false;
+                    }
+                }
+            }
+            return request;
+        }
+        //GET : HTTP Function to request data from server
+        function getData(fileName){
+            var xhr=createXHR();
+            if(xhr){
+                xhr.open("GET",fileName);
+                xhr.onreadystatechange=function(){
+                    if(xhr.readyState=4 && xhr.status==200){
+                        document.getElementById("detailsDiv").innerHTML=xhr.responseText;
+                    }
+                }
+                xhr.send(null);
+            }
+        }
+        
+    </script>
+</head>
+<body>
+    <h1>Welcome to Siemens UI Batch Jewellery Store!</h1>
+    <img id="bangle" src="bangles.jpg" onmousemove="getData('bangles.txt');">
+    <img id="ring" src="rings.jpg" onmousemove="getData('rings.txt');">
+    <img id="necklace" src="necklaces.jpg" onmousemove="getData('necklace.txt');">
+    <div id="detailsDiv">
+
+    </div>
+</body>
+</html>
